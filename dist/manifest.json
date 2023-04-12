@@ -8,5 +8,9 @@
     "32": "icon.png",
     "48": "icon.png",
     "128": "icon.png"
+  },
+  "action": {
+    "default_title": "Click me",
+    "default_popup": "popup.html"
   }
 }
