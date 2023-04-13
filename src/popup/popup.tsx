@@ -2,8 +2,32 @@ import React from "react";
 import { createRoot } from "react-dom/client";
 import "../assets/tailwind.css";
 
+const Conversations = () => {
+  const [conversations, setConversations] = React.useState([]);
+
+  React.useEffect(() => {
+    const headers = {
+      "Content-Type": "application/json",
+      Authorization:
+        "Bearer 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",
+    };
+    const fetchData = async () => {
+      const response = await fetch(
+        `https://chat.openai.com/backend-api/conversation`,
+        { headers }
+      );
+      const newData = await response.json();
+      setConversations(newData);
+    };
+    fetchData();
+  }, []);
+
+  console.log(conversations);
+};
+
 const test = (
   <div className="p-4">
+    <Conversations />
     <h1 className="text-center text-2xl mb-4">Search keywords</h1>
     <div className="max-w-md mx-auto">
       <div className="relative flex items-center w-full h-12 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
@@ -16,9 +40,9 @@ const test = (
             stroke="currentColor"
           >
             <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
             />
           </svg>
@@ -38,4 +62,5 @@ const test = (
 const container = document.createElement("div");
 document.body.appendChild(container);
 const root = createRoot(container);
+
 root.render(test);

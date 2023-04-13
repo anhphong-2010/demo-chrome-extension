@@ -38,6 +38,10 @@ module.exports = {
           },
         ],
       },
+      {
+        type: "assets/resource",
+        test: /\.(png|jpg|jpeg|gif|woff|woff2|tff|eot|svg)$/,
+      },
     ],
   },
   plugins: [
@@ -50,11 +54,7 @@ module.exports = {
         { from: path.resolve("src/static/icon.png"), to: path.resolve("dist") },
       ],
     }),
-    new HtmlPlugin({
-      title: "ReactJS Chrome Extension",
-      filename: "popup.html",
-      chunks: ["popup"],
-    }),
+    ...getHtmlPlugins(["popup"]),
   ],
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
@@ -62,4 +62,20 @@ module.exports = {
   output: {
     filename: "[name].js",
   },
+  optimization: {
+    splitChunks: {
+      chunks: "all",
+    },
+  },
 };
+
+function getHtmlPlugins(chunks) {
+  return chunks.map(
+    (chunk) =>
+      new HtmlPlugin({
+        title: "React Extension",
+        filename: `${chunk}.html`,
+        chunks: [chunk],
+      })
+  );
+}
